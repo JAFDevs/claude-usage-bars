@@ -61,6 +61,8 @@ Limit Lines only reads the usage figures your session already has, through Claud
 
 The only web address in the code, `http://www.w3.org/2000/svg`, is the standard name every SVG drawing declares itself with. Nothing is fetched from it or sent to it. The `tokens` you see in the code are counts of context tokens, not login tokens.
 
+The full policy is in [PRIVACY.md](PRIVACY.md).
+
 ## Development
 
 Run the tests from this folder:

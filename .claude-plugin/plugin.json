@@ -5,6 +5,10 @@
   "author": { "name": "jafdev", "url": "https://www.jafdev.com" },
   "homepage": "https://github.com/JAFDevs/claude-usage-bars",
   "repository": "https://github.com/JAFDevs/claude-usage-bars",
+  "documentationUrl": "https://github.com/JAFDevs/claude-usage-bars#readme",
+  "supportUrl": "https://github.com/JAFDevs/claude-usage-bars/issues",
+  "privacyPolicyUrl": "https://github.com/JAFDevs/claude-usage-bars/blob/main/PRIVACY.md",
+  "termsOfServiceUrl": "https://github.com/JAFDevs/claude-usage-bars/blob/main/LICENSE",
   "license": "MIT",
   "keywords": ["usage", "context", "rate limits", "status"],
   "types": "./types/index.d.ts"
