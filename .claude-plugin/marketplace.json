@@ -1,0 +1,6 @@
+{
+  "name": "usage-bars",
+  "description": "Usage Bars: context and rate limit meters for Claude Code",
+  "owner": { "name": "jafdev", "url": "https://www.jafdev.com" },
+  "plugins": [{ "name": "usage-bars", "source": "./" }]
+}

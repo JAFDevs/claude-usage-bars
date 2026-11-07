@@ -1,0 +1,5 @@
+# Written by Claude Code when it loads the plugin; lists the loader's own
+# types and the tools connected on that machine, so it never ships.
+.claude-plugin/types/
+.DS_Store
+*.log
