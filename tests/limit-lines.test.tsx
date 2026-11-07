@@ -4,16 +4,16 @@ import { expect, mock, test } from 'claude-code/testing'
 const SITE = { scroll: { offset: 0, bodyRows: 30 }, view: {} } as const
 
 const BAND = {
-  plugin: 'usage-bars',
+  plugin: 'limit-lines',
   component: 'AbovePrompt',
   requestId: 'band',
   props: { hasSurvey: false, isWorking: false, maxRows: 12, bodyColumns: 100, ...SITE },
 } as const
 
 const PANE = {
-  plugin: 'usage-bars',
+  plugin: 'limit-lines',
   component: 'Pane',
-  requestId: 'usage-bars',
+  requestId: 'limit-lines',
   props: { title: 'Usage', isFocused: false, bodyColumns: 40, placement: 'dock', ...SITE },
 } as const
 
@@ -29,7 +29,7 @@ const MEASURE: SessionMeasureInput = {
 
 const run = (args: string) =>
   ({
-    command: 'usage-bars',
+    command: 'limit-lines',
     args,
     origin: { kind: 'composer' },
     presentation: { isFullscreen: false, columns: 100 },
@@ -40,7 +40,7 @@ const run = (args: string) =>
 // gives no breakdown and the model's own window stands.
 const engine = (on: On, surface: RenderSurface, compactsAt?: number) => {
   const pane = { isOpen: false }
-  on('command.register', () => ({ value: { command: 'usage-bars' } }))
+  on('command.register', () => ({ value: { command: 'limit-lines' } }))
   on('session.start', (_, e) => ({ cwd: e.cwd }))
   on('session.surfaces', () => ({ value: [surface] }))
   on('session.usage', (_, e) => ({
@@ -60,7 +60,7 @@ const engine = (on: On, surface: RenderSurface, compactsAt?: number) => {
   on('ui.close', () => ((pane.isOpen = false), { value: undefined }))
   on('ui.panes', () => ({
     value: pane.isOpen
-      ? [{ id: 'usage-bars', title: 'Usage', isShown: true, isFocused: false, isPlaced: true }]
+      ? [{ id: 'limit-lines', title: 'Usage', isShown: true, isFocused: false, isPlaced: true }]
       : [],
   }))
   on('ui.render', ($, e) => {
@@ -96,7 +96,7 @@ test('on desktop the meters sit above the prompt as three animated lines', async
   await ui.unmount()
 })
 
-test('/usage-bars side stacks the same lines in the pane', async ($, on) => {
+test('/limit-lines side stacks the same lines in the pane', async ($, on) => {
   mock.clock(on, { now: 1_000_000 })
   const pane = engine(on, 'desktop')
   await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
@@ -189,7 +189,7 @@ test('the terminal keeps text bars above the prompt', async ($, on) => {
   await ui.unmount()
 })
 
-test('/usage-bars moves the meters between the pane, the band and nowhere', async ($, on) => {
+test('/limit-lines moves the meters between the pane, the band and nowhere', async ($, on) => {
   mock.clock(on)
   const pane = engine(on, 'desktop')
   await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })

@@ -1,5 +1,5 @@
 {
-  "name": "usage-bars",
+  "name": "limit-lines",
   "version": "0.1.0",
   "description": "Shows your context window and your 5-hour and weekly limits as animated lines above the prompt",
   "author": { "name": "jafdev", "url": "https://www.jafdev.com" },

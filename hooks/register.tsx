@@ -9,22 +9,22 @@ import type {
 
 import type { ContextMax, Mode, Snapshot } from '../types'
 
-const PANE = 'usage-bars'
+const PANE = 'limit-lines'
 const TITLE = 'Usage'
 
 // Bump the tag when Snapshot's fields change: a value an older version
 // stored is then read as null instead of being drawn with missing fields.
-const snapshot = atom({ plugin: 'usage-bars', key: 'snapshot' } as const, null, {
+const snapshot = atom({ plugin: 'limit-lines', key: 'snapshot' } as const, null, {
   shape: 'snapshot-2',
 })
 // The tag resets a choice an older version stored (the side pane, say) once,
 // so the meters come back above the prompt.
-const mode = atom({ plugin: 'usage-bars', key: 'mode' } as const, 'auto' as Mode, {
+const mode = atom({ plugin: 'limit-lines', key: 'mode' } as const, 'auto' as Mode, {
   shape: 'mode-2',
 })
-const contextMax = atom({ plugin: 'usage-bars', key: 'contextMax' } as const, null as ContextMax | null)
-const isDocked = atom({ plugin: 'usage-bars', key: 'isDocked' } as const, false)
-const isWorking = atom({ plugin: 'usage-bars', key: 'isWorking' } as const, false)
+const contextMax = atom({ plugin: 'limit-lines', key: 'contextMax' } as const, null as ContextMax | null)
+const isDocked = atom({ plugin: 'limit-lines', key: 'isDocked' } as const, false)
+const isWorking = atom({ plugin: 'limit-lines', key: 'isWorking' } as const, false)
 
 type Level = 'ok' | 'warn' | 'high'
 
@@ -314,7 +314,7 @@ const lineBar = (percent: number, width: number) => {
   return ['━'.repeat(filled), '─'.repeat(width - filled)] as const
 }
 
-/** Only an explicit `/usage-bars side` docks the meters; otherwise they sit above the prompt. */
+/** Only an explicit `/limit-lines side` docks the meters; otherwise they sit above the prompt. */
 const wantsSide = (m: Mode) => m === 'side'
 
 const ARGS: Record<string, Mode> = {
@@ -333,7 +333,7 @@ export const register: Register = on => {
   on('session.start', async ($, e, next) => {
     const started = await next(e)
     await $.command.register({
-      name: 'usage-bars',
+      name: 'limit-lines',
       description: 'Show usage in the side pane, above the prompt, or nowhere',
       argumentHint: 'side | band | off',
     })
@@ -396,7 +396,7 @@ export const register: Register = on => {
     return next(e)
   }).catch(($, e, next) => next(e))
 
-  on('command.run', { command: 'usage-bars' }, async ($, e) => {
+  on('command.run', { command: 'limit-lines' }, async ($, e) => {
     const current = await read($, mode)
     const effective = current === 'auto' ? 'band' : current
     const asked = ARGS[e.args.trim().toLowerCase()]
@@ -411,7 +411,7 @@ export const register: Register = on => {
         text:
           chosen === 'band'
             ? 'Usage now shows above the prompt.'
-            : 'Usage hidden. Run /usage-bars to bring it back.',
+            : 'Usage hidden. Run /limit-lines to bring it back.',
       }
     }
 

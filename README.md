@@ -1,4 +1,4 @@
-# Usage Bars
+# Limit Lines
 
 See how full your context window is and how much of your 5-hour and weekly limits you've used, right above the prompt in Claude Code.
 
@@ -19,10 +19,10 @@ Each line is blue below 60%, orange from 60% and red from 85%, where the percent
 In Claude Code in a terminal:
 
 ```
-/plugin install usage-bars --marketplace JAFDevs/claude-usage-bars
+/plugin install limit-lines --marketplace JAFDevs/claude-usage-bars
 ```
 
-In the Claude desktop app: click + next to the prompt box, choose Plugins, add the marketplace `JAFDevs/claude-usage-bars`, then add Usage Bars.
+In the Claude desktop app: click + next to the prompt box, choose Plugins, add the marketplace `JAFDevs/claude-usage-bars`, then add Limit Lines.
 
 New sessions show the meters right away.
 
@@ -30,20 +30,34 @@ New sessions show the meters right away.
 
 | Command | What it does |
 | --- | --- |
-| `/usage-bars` | Switches between above the prompt and the side pane |
-| `/usage-bars band` | Shows the meters above the prompt (the default) |
-| `/usage-bars side` | Moves them into a side pane, stacked |
-| `/usage-bars off` | Hides them; run `/usage-bars` to bring them back |
+| `/limit-lines` | Switches between above the prompt and the side pane |
+| `/limit-lines band` | Shows the meters above the prompt (the default) |
+| `/limit-lines side` | Moves them into a side pane, stacked |
+| `/limit-lines off` | Hides them; run `/limit-lines` to bring them back |
 
 Closing the side pane by hand puts the meters back above the prompt.
 
 ## Requirements
 
-A recent Claude Code. Usage Bars is built and tested on 2.1.317 and 2.1.319; older releases such as 2.1.276 can't load it. It runs in Claude Code in the terminal and in the Claude desktop app's Code tab.
+A recent Claude Code. Limit Lines is built and tested on 2.1.317 and 2.1.319; older releases such as 2.1.276 can't load it. It runs in Claude Code in the terminal and in the Claude desktop app's Code tab.
+
+## What it hooks
+
+Every hook passes the event on unchanged. Limit Lines watches these events and never blocks, rewrites or cancels any of them.
+
+| Event | What Limit Lines does there |
+| --- | --- |
+| `session.start` | Adds the `/limit-lines` command and reads the session's usage once, so the lines show right away |
+| `session.attach` | Opens the side pane when the desktop app connects, if you chose `/limit-lines side` |
+| `session.measure` | Updates the lines each time Claude Code measures the session's usage |
+| `turn.start`, `turn.complete` | Starts and stops the highlight that runs along the lines while Claude is working |
+| `ui.close` | Notes when the Limit Lines side pane closes, so closing it by hand moves the lines back above the prompt. It looks only at its own pane, and the close always goes ahead, even if this hook fails |
+| `command.run` | Answers `/limit-lines` and nothing else |
+| `ui.render` | Draws the lines above the prompt and in its own side pane |
 
 ## Privacy
 
-Usage Bars only reads the usage figures your session already has. It makes no network requests and keeps nothing once the session ends.
+Limit Lines only reads the usage figures your session already has, through Claude Code's own `session.usage` and `session.measure`. It never reads, asks for or sends a password, key or other credential, makes no network requests and keeps nothing once the session ends.
 
 ## Development
 

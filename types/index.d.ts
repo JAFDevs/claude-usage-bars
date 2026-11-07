@@ -27,7 +27,7 @@ export type Mode = 'auto' | 'side' | 'band' | 'off'
 
 declare module 'claude-code' {
   interface PluginState {
-    'usage-bars': {
+    'limit-lines': {
       snapshot: Shaped<Snapshot | null>
       mode: Shaped<Mode>
       contextMax: ContextMax | null
