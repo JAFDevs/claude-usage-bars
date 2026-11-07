@@ -257,6 +257,8 @@ const lineSvg = (m: Meter, elapsed: number, working: boolean) => {
         `keyTimes="0;1" keySplines="0.45 0 0.25 1" repeatCount="indefinite"/></rect></g>`
       : ''
 
+  // The xmlns address is the standard SVG namespace name, which a surface that
+  // draws the SVG as an image needs. Nothing is fetched from it or sent to it.
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="${LINE}">${titleOf(m)}` +
     `<style>${PALETTE}svg{display:block;width:100%;height:100%;overflow:hidden}` +

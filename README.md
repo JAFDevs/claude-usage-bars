@@ -59,6 +59,8 @@ Every hook passes the event on unchanged. Limit Lines watches these events and n
 
 Limit Lines only reads the usage figures your session already has, through Claude Code's own `session.usage` and `session.measure`. It never reads, asks for or sends a password, key or other credential, makes no network requests and keeps nothing once the session ends.
 
+The only web address in the code, `http://www.w3.org/2000/svg`, is the standard name every SVG drawing declares itself with. Nothing is fetched from it or sent to it. The `tokens` you see in the code are counts of context tokens, not login tokens.
+
 ## Development
 
 Run the tests from this folder:
