@@ -26,6 +26,31 @@ In the Claude desktop app: click + next to the prompt box, choose Plugins, add t
 
 New sessions show the meters right away.
 
+An install from GitHub doesn't update by itself. To get a newer version, open `/plugin`, choose Marketplaces, then limit-lines, then Update marketplace. Auto-update stays off unless you choose Enable auto-update in that same menu.
+
+### Install from a downloaded copy
+
+To keep a copy that never changes unless you replace it, install from a folder on your computer instead of from GitHub.
+
+1. Get the code: on this page click **Code**, then **Download ZIP**, or use a zip someone sent you. Unzip it and move the folder somewhere it can stay. Claude Code reads the mod straight from that folder, so don't move or delete it afterwards.
+2. If you installed Limit Lines from GitHub before, remove that first, since both use the same name:
+
+   ```
+   claude plugin uninstall limit-lines@limit-lines
+   claude plugin marketplace remove limit-lines
+   ```
+
+3. Add the folder and install from it, using your folder's own path:
+
+   ```
+   claude plugin marketplace add ~/limit-lines
+   claude plugin install limit-lines@limit-lines --scope user
+   ```
+
+4. Start a new session. `claude plugin list` shows `Read from:` and your folder when it worked.
+
+A folder copy never updates by itself. To update it, replace the folder with a newer copy in the same place, then start a new session.
+
 ## Use
 
 | Command | What it does |
